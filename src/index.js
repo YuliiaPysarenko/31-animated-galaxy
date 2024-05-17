@@ -41,7 +41,7 @@ const renderer = setupRenderer(canvas, sizes);
 
 // GUI
 const gui = new dat.GUI();
-setupGUI(gui, generateGalaxy, parameters);
+setupGUI(gui, () => generateGalaxy(scene, renderer), parameters);
 
 // Generate galaxy
 generateGalaxy(scene, renderer);
@@ -55,7 +55,9 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
   // Update material
-  parameters.material.uniforms.uTime.value = elapsedTime * parameters.spinSpeed;
+  if (parameters.material) {
+    parameters.material.uniforms.uTime.value = elapsedTime * parameters.spinSpeed;
+  }
 
   // Update controls
   controls.update();
